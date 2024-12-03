@@ -7,22 +7,37 @@ private:
     double real;
     double img;
 public:
+    complex()
+    {
+        this->real = 0;
+        this->img = 0;
+    }
+    complex(double real, double img)
+    {
+        this->real = real;
+        this->img = img;
+    }
     double getReal()
     {
         return real;
+    }
+    void setImg(double img)
+    {
+        this->img = img;
+    }
+     void setReal(double real)
+    {
+         this->real = real;
     }
     double getImg()
     {
         return img;
     }
-    void setReal(double R)
+    /*void setComplex(double real, double img)
     {
-        real = R;
-    }
-    void setImg(double I)
-    {
-        img = I;
-    }
+        this->real = real;
+        this->img = img;
+    }*/
     void print()
     {
         if (real != 0) cout << real;
@@ -31,13 +46,37 @@ public:
         else if (img == 0 && real == 0) cout << "No Data!";
         cout << endl;
     }
+        complex subtract(complex c1)
+    {
+        //complex result;
+        this->real -= c1.real;
+        //result.setReal(real);
+        this->img -= c1.img;
+        //result.setImg(img);
+        //return result;
+        return *this;
+    }
+        complex add(complex c1)
+    {
+        //complex result;
+        this->real += c1.real;
+        //result.setReal(real);
+        this->img += c1.img;
+        //result.setImg(img);
+        //return result;
+        return *this;
+    }
+    ~complex()
+    {
+        cout << "Goodbye..\n";
+    }
 
     };
 
 
 
 
-    complex add(complex c1, complex c2)
+  /*  complex add(complex c1, complex c2)
     {
         complex result;
         double real = c1.getReal() + c2.getReal();
@@ -54,11 +93,11 @@ public:
         double img = c1.getImg() - c2.getImg();
         result.setImg(img);
         return result;
-    }
+    }*/
 
 int main()
 {
-    complex myComp1, myComp2, resultComp;
+    //complex myComp1, myComp2, resultComp;
     double real1, img1, real2, img2;
     cout << "Enter the first complex number\n";
     cout <<"Enter the real part: ";
@@ -70,15 +109,14 @@ int main()
     cin >> real2;
     cout <<"Enter the imaginary part: ";
     cin >> img2;
-    myComp1.setReal(real1);myComp1.setImg(img1);
-    myComp2.setReal(real2);myComp2.setImg(img2);
+    complex myComp1(real1,img1), myComp2(real2,img2), resultComp;
     myComp1.print();
     myComp2.print();
-    resultComp = add(myComp1, myComp2);
+    resultComp.add(myComp1);
+    resultComp.add(myComp2);
     resultComp.print();
-    resultComp = subtract(myComp1, myComp2);
+    resultComp.subtract(myComp2);
     resultComp.print();
-    //resultComp = myComp1.add(myComp2);
     resultComp.print();
     return 0;
 }
