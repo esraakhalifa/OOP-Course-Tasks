@@ -25,10 +25,13 @@ public:
     }
     void print()
     {
-w
+        if (real != 0) cout << real;
+        if (img > 0) cout << "+" << img << "i";
+        else if (img < 0)  cout << img << "i";
+        else if (img == 0 && real == 0) cout << "No Data!";
         cout << endl;
-
     }
+
     };
 
 
@@ -75,6 +78,7 @@ int main()
     resultComp.print();
     resultComp = subtract(myComp1, myComp2);
     resultComp.print();
+    //resultComp = myComp1.add(myComp2);
+    resultComp.print();
     return 0;
 }
-
