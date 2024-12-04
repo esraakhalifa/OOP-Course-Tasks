@@ -60,10 +60,10 @@ public:
 
     void display()
     {
-        int numItems = top + 1;
-        for (int i = 0; i < numItems; i++)
+        //int numItems = top + 1;
+        for (int i = top; i >=0; i--)
         {
-            cout << items[i].ID << ". " << items[i].Name << ", " <<items[i].Age << ", earns" << items[i].salary ;
+            cout << items[i].ID << ". " << items[i].Name << ", " <<items[i].Age << " years old, earns " << items[i].salary << endl;
         }
         cout << endl;
     }
@@ -132,8 +132,7 @@ int main()
         moveArrows(selectedOption);
         renderMenu(selectedOption);
 
-        if (_kbhit())
-        {
+
             char key = _getch();
             if (key == 13)
             {
@@ -141,21 +140,54 @@ int main()
                 if (selectedOption == 0)
                 {
 
-                    cout << "You selected 'Push'!" << endl;
+                    //cout << "You selected 'Push'!" << endl;
+                    Employee employee;
+                    printf("Enter ID: ");
+                    scanf("%s", &employee.ID);
+                    printf("Enter name: ");
+                    scanf("%s", &employee.Name);
+                    printf("Enter age: ");
+                    scanf("%s", &employee.Age);
+                    printf("Enter salary: ");
+                    scanf("%s", &employee.salary);
+                    try{
+                        employeeStack.push(employee);
+                    }
+                    catch (const exception& e)
+                    {
+                        cout << e.what() << endl;
+                    }
+
+                    renderMenu(selectedOption);
+
                 }
                 else if (selectedOption == 1)
                 {
 
-                    cout << "You selected 'Pop'!" << endl;
+                    //cout << "You selected 'Pop'!" << endl;
+                    try{
+                        Employee poppedEmployee = employeeStack.pop();
+                        cout << poppedEmployee.ID << ". " << poppedEmployee.Name << ", " << poppedEmployee.Age << " years old, earns " << poppedEmployee.salary <<endl;
+                    }
+                    catch (const exception& e)
+                    {
+                        cout << e.what() << endl;
+                    }
+
+                   // employeeStack.pop();
                 }
                 else if (selectedOption == 2)
                 {
 
-                    cout << "You selected 'PrintStack'!" << endl;
+                    employeeStack.display();
                 }
 
             }
-        }
+            else if ( key == -32 )
+            {
+                moveArrows(selectedOption);
+            }
+
     }
 
     return 0;
