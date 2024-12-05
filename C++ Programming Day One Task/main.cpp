@@ -33,11 +33,11 @@ public:
     {
         return img;
     }
-    /*void setComplex(double real, double img)
+    void setComplex(double real, double img)
     {
         this->real = real;
         this->img = img;
-    }*/
+    }
     void print()
     {
         if (real != 0) cout << real;
@@ -83,7 +83,20 @@ public:
     {
         complex c = *this;
         ++(this->real);
-        //++(this->img);
+
+        return c;
+    }
+    complex operator--()
+    {
+        --(this->real);
+
+        return *this;
+    }
+    complex operator--(int x)
+    {
+        complex c = *this;
+        --(this->real);
+
         return c;
     }
     complex operator=(const complex &c)
@@ -134,6 +147,14 @@ public:
         return 0;
     }
     int operator==(complex &c)
+    {
+        if (this->real == c.real && this->img == c.img)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    int operator!=(complex &c)
     {
         if (this->real == c.real && this->img == c.img)
         {
