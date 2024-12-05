@@ -48,24 +48,123 @@ public:
     }
         complex subtract(complex c1)
     {
-        //complex result;
+
         this->real -= c1.real;
-        //result.setReal(real);
+
         this->img -= c1.img;
-        //result.setImg(img);
-        //return result;
+
         return *this;
     }
         complex add(complex c1)
     {
-        //complex result;
+
         this->real += c1.real;
-        //result.setReal(real);
+
         this->img += c1.img;
-        //result.setImg(img);
-        //return result;
+
         return *this;
     }
+    complex operator+(const complex &c)
+    {
+        return complex(this->real + c.real, this->img + c.img);
+
+    }
+    complex operator-(const complex &c)
+    {
+        return complex(this->real - c.real, this->img - c.img);
+    }
+    complex operator++()
+    {
+        ++(this->real);
+        //++(this->img);
+        return *this;
+    }
+    complex operator++(int x)
+    {
+        complex c = *this;
+        ++(this->real);
+        //++(this->img);
+        return c;
+    }
+    complex operator=(const complex &c)
+    {
+        this->real = c.real;
+        this->img = c.img;
+        return *this;
+    }
+    int operator>(complex &c)
+    {
+        if (this->real > c.real && this->img > c.img)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    int operator<(complex &c)
+    {
+        if (this->real < c.real && this->img < c.img)
+        {
+            return 1;
+        }
+        return 0;
+
+    }
+    /*complex operator-=(complex &c)
+    {
+
+    }
+    complex operator+=(complex &c)
+    {
+
+    }*/
+    int operator>=(complex &c)
+    {
+        if (this->real >= c.real && this->img >= c.img)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    int operator<=(complex &c)
+    {
+        if (this->real <= c.real && this->img <= c.img)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    int operator==(complex &c)
+    {
+        if (this->real == c.real && this->img == c.img)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    complex operator/=(const complex &c)
+    {
+        this->real /= c.real;
+        this->img /= c.img;
+        return *this;
+    }
+    complex operator/(const complex &c)
+    {
+        if (c.real == 0 && c.img == 0) {
+            throw runtime_error("Division by zero");
+    }
+        return complex(this->real / c.real, this->img / c.img);
+    }
+    complex operator*(const complex &c)
+    {
+        return complex(this->real * c.real, this->img * c.img);
+    }
+    complex operator*=(const complex &c)
+    {
+        this->real *= c.real;
+        this->img *= c.img;
+        return *this;
+    }
+
     ~complex()
     {
         cout << "Goodbye..\n";
@@ -112,11 +211,32 @@ int main()
     complex myComp1(real1,img1), myComp2(real2,img2), resultComp;
     myComp1.print();
     myComp2.print();
-    resultComp.add(myComp1);
-    resultComp.add(myComp2);
+    /*resultComp = myComp1+myComp2;
     resultComp.print();
-    resultComp.subtract(myComp2);
+    cout <<  (myComp1 > myComp2) << endl;
+    cout <<  (myComp1 < myComp2) << endl;
+    cout <<  (myComp1 >= myComp2) << endl;
+    cout <<  (myComp1 <= myComp2) << endl;
+    cout <<  (myComp1 == myComp2) << endl;*/
+    myComp1++;
+    myComp1.print();
+    ++myComp1;
+    myComp2.print();
+    resultComp = complex(1,2) * complex(1,2);
     resultComp.print();
+    resultComp = complex(1,2) / complex(1,2);
     resultComp.print();
+    resultComp = complex(1,2);
+    resultComp.print();
+    resultComp /= complex(1,2);
+    resultComp.print();
+    resultComp *= complex(1,2);
+    resultComp.print();
+    //resultComp.add(myComp1);
+    //resultComp.add(myComp2);
+    //resultComp.print();
+    //resultComp.subtract(myComp2);
+    //resultComp.print();
+    //resultComp.print();
     return 0;
 }

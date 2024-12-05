@@ -25,6 +25,7 @@ class Stack
 {
 private:
     int size;
+    static int count;
     int top;
     Employee *items;
 
@@ -32,6 +33,7 @@ public:
     Stack(int size)
     {
         this->size = size;
+        count++;
         top = -1;
         items = new Employee[size];
     }
@@ -46,6 +48,10 @@ public:
         items[top] = data;
         return 1;
     }
+    /*static void setCount()
+    {
+        Stack::count = 0;
+    }*/
 
     Employee pop()
     {
@@ -115,6 +121,7 @@ void moveArrows(int &selectedOption)
     }
 
 }
+int Stack::count = 0;
 
 int main()
 {
@@ -123,6 +130,7 @@ int main()
     cin >> inputSize;
     Stack employeeStack(inputSize);
 
+    //Stack::setCount();
     int selectedOption = NULL;
     selectedOption = 0;
     renderMenu(selectedOption);
@@ -140,16 +148,20 @@ int main()
                 if (selectedOption == 0)
                 {
 
-                    //cout << "You selected 'Push'!" << endl;
+
                     Employee employee;
                     printf("Enter ID: ");
-                    scanf("%s", &employee.ID);
+                    //while ()
+                    cin >> employee.ID;
                     printf("Enter name: ");
-                    scanf("%s", &employee.Name);
+                    //while( getchar() != '\n')
+                    //{
+                        cin >> employee.Name;
+                    //}
                     printf("Enter age: ");
-                    scanf("%s", &employee.Age);
+                    cin >>employee.Age;
                     printf("Enter salary: ");
-                    scanf("%s", &employee.salary);
+                    cin >>employee.salary;
                     try{
                         employeeStack.push(employee);
                     }
@@ -158,13 +170,16 @@ int main()
                         cout << e.what() << endl;
                     }
 
+                    system("cls");
+
+                    cout << "Employee is added successfully.\n";
+                    Sleep(5000);
                     renderMenu(selectedOption);
 
                 }
                 else if (selectedOption == 1)
                 {
 
-                    //cout << "You selected 'Pop'!" << endl;
                     try{
                         Employee poppedEmployee = employeeStack.pop();
                         cout << poppedEmployee.ID << ". " << poppedEmployee.Name << ", " << poppedEmployee.Age << " years old, earns " << poppedEmployee.salary <<endl;
@@ -174,7 +189,6 @@ int main()
                         cout << e.what() << endl;
                     }
 
-                   // employeeStack.pop();
                 }
                 else if (selectedOption == 2)
                 {

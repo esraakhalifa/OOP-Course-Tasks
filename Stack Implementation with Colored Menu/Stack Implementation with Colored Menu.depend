@@ -1,7 +1,5 @@
 # depslib dependency file v1.0
-1733256451 source:d:\oop c++ programming\stack implementation with colored menu\main.cpp
-	<conio.h>
-	<windows.h>
+1733314284 source:d:\oop c++ programming\stack implementation with colored menu\main.cpp
 	<iostream>
 	<conio.h>
 	<windows.h>
