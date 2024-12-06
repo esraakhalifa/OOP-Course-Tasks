@@ -10,27 +10,68 @@ public:
 
     String(int size = 0, char *characters = "")
     {
-        this->size = size > 0 ? size : this->strlen(characters) + 1;
+        int i = 0;
+        for (; characters[i] != '\0'; i++);
+        this->size = size > 0 ? size :i + 1;
         this->characters = new char[this->size];
-        for (int i = 0; i < this->size - 1 && characters[i] != '\0'; i++) {
-            this->characters[i] = characters[i];
+        int j = 0;
+        for (; i < this->size - 1 && characters[j] != '\0'; j++) {
+            this->characters[j] = characters[j];
         }
-        this->characters[this->size - 1] = '\0';
+        this->characters[j] = '\0';
     }
 
+    String& operator+=( String &s)
+    {
+        int newSize = this->strlen() + s.strlen() + 1;
+         char* newCharacters = new char[newSize];
 
-    String& operator=(const String &s)
+        int indx = 0;
+        for (; indx < this->strlen(); indx++)
+        {
+            newCharacters[indx] = this->characters[indx];
+        }
+        for(int indx2 = 0; indx2 < s.strlen(); indx2++)
+        {
+            newCharacters[indx++] = s.characters[indx2];
+        }
+        newCharacters[indx] = '\0';
+        delete [] this->characters;
+        this->size = newSize;
+        this->characters = newCharacters;
+        return *this;
+
+    }
+
+    String& operator=( String &s)
     {
         if (this == &s) return *this;
 
-        delete[] this->characters;
+        delete[] this->characters; // freeing allocated space for old string
 
         this->size = s.size;
-        this->characters = new char[this->size];
+        this->characters = new char[this->size]; // allocating new memory for the new string
         for (int i = 0; i < this->size; i++) {
             this->characters[i] = s.characters[i];
         }
         return *this;
+    }
+    char operator[](int index)
+    {
+        try {
+            if (index > this->size)
+            {
+                return -1;
+                throw out_of_range("Out of bounds!");
+            }
+
+        }
+        catch (const exception& e)
+        {
+            cout << e.what();;
+        }
+
+        return this->characters[index];
     }
 
     /*String reSize(int size, char character = '\0')
@@ -74,7 +115,7 @@ public:
         return i;
     }
 
-    int strcmp(String S) // works with a string obj only
+    int strcmp( String &S)  // works with a string obj only
     {
         if (this->strlen() > S.strlen()) return 1;
         else if (this->strlen() < S.strlen()) return -1;
@@ -85,7 +126,7 @@ public:
         return size;
     }
 
-    String strcat(String addition)
+    String strcat( String &addition) //const
     {
         int newSize = this->strlen() + addition.strlen() + 1;
         String newString(newSize);
@@ -103,6 +144,16 @@ public:
 
 
     }
+   String esraa_substr(int start, int length)
+   {
+       String esraaString(length + 1);
+       int originalIndx = start;
+       for (int i = 0; i < esraaString.size && originalIndx <= length; i++)
+       {
+           esraaString.characters[i] = this->characters[originalIndx++];
+       }
+       return esraaString;
+   }
     void display()
     {
         if (this->strlen() == 0) cout << "Empty string.\n";
@@ -114,6 +165,7 @@ public:
                 cout << endl;
             }
     }
+
 /*
 char * strcpy(char dest[], char source[], int Size)
 {
@@ -139,6 +191,7 @@ char * strcpy(char dest[], char source[], int Size)
 
 }
     */
+
     ~String()
     {
         delete [] characters;
@@ -156,5 +209,11 @@ int main()
     cout << s1.strcmp(s4) << endl;
     String result = s1.strcat(s2);
     result.display();
+    s1 += s2;
+    s1.display();
+    cout << s1[3] << endl;
+    cout << s1[13] << endl;
+    String s5 = s1.esraa_substr(1,5);
+    s5.display();
     return 0;
 }
