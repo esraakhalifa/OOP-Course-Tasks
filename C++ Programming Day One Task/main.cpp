@@ -76,14 +76,12 @@ public:
     complex operator++()
     {
         ++(this->real);
-        //++(this->img);
         return *this;
     }
     complex operator++(int x)
     {
         complex c = *this;
         ++(this->real);
-
         return c;
     }
     complex operator--()

@@ -15,6 +15,9 @@ public:
         this->size = size;
         top = -1;
         items = new int [size];
+        count++;
+        cout << "Constructor called!\n";
+        cout << count;
     }
     Stack(Stack &S)
     {
@@ -27,8 +30,8 @@ public:
         }
         cout << "Copy constructor called!\n";
 
-
     }
+
     int push(int data)
     {
         if(top == size - 1)
@@ -44,7 +47,7 @@ public:
     {
         if (top == -1)
         {
-            //return 0;
+
             throw runtime_error("Stack is already empty.");
         }
         int data = items[top];
@@ -66,6 +69,7 @@ public:
     ~Stack()
     {
         delete [] items;
+        count--;
         cout << "Destructor Call !\n";
     }
     Stack operator=(Stack &S)
@@ -84,12 +88,12 @@ public:
 };
 int Stack::count = 0;
 
-/*void viewContentByVal(Stack S)
+void viewContentByVal(Stack S)
 {
     Stack S1(S);
     S1.display();
     cout << "I'm the viewContentByVal function!\n";
-}*/
+}
 void viewContentByRef(Stack &S)
 {
     Stack S1(S);
@@ -97,13 +101,7 @@ void viewContentByRef(Stack &S)
     cout << "I'm the viewContentByRef function!\n";
 
 }
-/*void viewContentByRef(Stack &S)
-{
-    Stack S1(S);
-    S1.display();
-    cout << "I'm the viewContentByRef function!\n";
 
-}*/
 
 int main()
 {
@@ -118,15 +116,7 @@ int main()
     s.push(25);
     s.push(25);
     s.push(25);
-    //s.display();
     s.push(25);
-    /*try{
-        s.push(25);
-    }
-    catch (const exception& e)
-    {
-        cout << e.what() << endl;
-    }*/
     Stack s1(5);
     s1.push(1);
     s1.push(2);
@@ -135,18 +125,6 @@ int main()
     s1.push(5);
     s = s1;
     viewContentByRef(s);
-    //viewContentByVal(s);
-    //s.pop();
-    //s.pop();
-    /*s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
-    */
     try
     {
         s.pop();
