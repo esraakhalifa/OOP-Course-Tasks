@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
+//#include <graphics.h>
 using namespace std;
 
 class Point {
@@ -13,13 +13,33 @@ public:
     int getY() { return y; }
 };
 
-class Line {
+class Shape
+{
+private:
+    int color;
+public:
+    Shape() : color(0) {}
+
+    Shape(int color)
+    {
+        this->color = color;
+    }
+    int getColor()
+    {
+        return color;
+    }
+    void setColor(int color)
+    {
+        this->color = color;
+    }
+};
+class Line : public Shape{
 private:
     Point start;
     Point end;
 public:
-    Line() : start(), end() {}
-    Line(int x1, int y1, int x2, int y2) : start(x1, y1), end(x2, y2) {}
+    Line() : Shape(), start(), end() {}
+    Line(int color,int x1, int y1, int x2, int y2) : Shape(color), start(x1, y1), end(x2, y2) {}
 
     void draw() {
         // Placeholder for drawing a line
@@ -27,13 +47,14 @@ public:
     }
 };
 
-class Rect {
+class Rect : public Shape{
 private:
     Point ul; // Upper-left point
     Point lr; // Lower-right point
 public:
-    Rect() : ul(), lr() {}
-    Rect(int x1, int y1, int x2, int y2) : ul(x1, y1), lr(x2, y2) {}
+    Rect() : Shape(),ul(), lr() {}
+    Rect(int color,int x1, int y1, int x2, int y2) : Shape(color), ul(x1, y1), lr(x2, y2) {}
+
 
     void draw() {
         // Placeholder for drawing a rectangle
@@ -41,13 +62,14 @@ public:
     }
 };
 
-class Circle {
+class Circle : public Shape{
 private:
     Point center;
     int radius;
 public:
-    Circle() : center(), radius(0) {}
-    Circle(int m, int n, int r) : center(m, n), radius(r) {}
+    Circle() : Shape(), center(), radius(0) {}
+    Circle(int color,int m, int n, int r) : Shape(color), center(m, n), radius(r) {}
+
 
     void draw() {
         // Placeholder for drawing a circle
