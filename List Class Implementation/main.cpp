@@ -20,9 +20,11 @@ private:
 public:
     List(int Size = 10, char *elements = "")
     {
-        this->inputSize = 0;
+        inputSize = 0;
         for (; elements[inputSize] != '\0'; inputSize++);
+
         this->Size = inputSize > Size ? inputSize : Size;
+
         this->elements = new char[this->Size]();
 
         int j = 0;
@@ -34,7 +36,7 @@ public:
     }
     void display()
     {
-        if (elements[0] == '\0')cout << "Empty string.\n";
+        if (inputSize == 0)cout << "Empty string.\n";
         else{
                 //int i = this->inputSize;
                 for (int i = 0; elements[i] != '\0'; i++)
@@ -52,35 +54,41 @@ public:
 
     void pushBack(char  element)
     {
-        this->inputSize += 1;
-        if (this->Size <= this->inputSize + 2) // accounting for the added character and the null terminator
+        inputSize += 1;
+        if (Size <= inputSize + 2) // accounting for the added character and the null terminator
         {
-            List old = *this;
-            List New(old.Size + 10);
+            char * newElements = new char[Size + 10]();
             int i = 0;
-            for (; i < old.inputSize; i++)
+            for (; i <inputSize; i++)
             {
-                New.elements[i] = old.elements[i];
+                newElements[i] = elements[i];
             }
-            New.elements[i++] = element;
-            New.elements[i] = '\0';
+
             this->Size += 10;
-            delete [] this->elements;
-            *this = New;
+            delete []elements;
+            element = *newElements;
         }
-        else
-        {this->elements[this->inputSize] = element;
-        this->elements[this->inputSize + 1] = '\0';}
+        elements[inputSize++] = element;
+        elements[inputSize] = '\0';
 
     }
 
     char& getStart()
     {
+         if (inputSize == 0)
+            {
+                throw runtime_error("List is empty!");
+            }
         return elements[0];
     }
     char& getEnding()
     {
-        return elements[inputSize-1];
+        if (inputSize == 0)
+        {
+            throw runtime_error("List is empty!");
+        }
+
+        return elements[inputSize - 1];
     }
     ~List()
     {

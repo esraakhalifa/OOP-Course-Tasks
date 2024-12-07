@@ -17,7 +17,7 @@ public:
         items = new int [size];
         count++;
         cout << "Constructor called!\n";
-        cout << count;
+        cout << count << endl;
     }
     Stack(Stack &S)
     {
@@ -74,12 +74,13 @@ public:
     }
     Stack operator=(Stack &S)
     {
-        this->size = S.size;
-        this->top = S.top;
-        this->items = new int[size];
+        delete[] items;
+        size = S.size;
+        top = S.top;
+        items = new int[size];
         for (int i = 0; i < top + 1; i++)
         {
-            this->items[i]=S.items[i];
+            items[i]=S.items[i];
         }
         cout << " = operator called!\n";
         return *this;
@@ -90,8 +91,8 @@ int Stack::count = 0;
 
 void viewContentByVal(Stack S)
 {
-    Stack S1(S);
-    S1.display();
+    //Stack S1(S);
+    S.display();
     cout << "I'm the viewContentByVal function!\n";
 }
 void viewContentByRef(Stack &S)
@@ -124,6 +125,7 @@ int main()
     s1.push(4);
     s1.push(5);
     s = s1;
+    viewContentByVal(s);
     viewContentByRef(s);
     try
     {
