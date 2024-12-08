@@ -2,6 +2,18 @@
 //#include <graphics.h>
 using namespace std;
 
+void line(int x1, int y1, int x2, int y2) {
+    cout << "Drawing line from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")" << endl;
+}
+
+void rectangle(int x1, int y1, int x2, int y2) {
+    cout << "Drawing rectangle from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")" << endl;
+}
+
+void circle(int x, int y, int radius) {
+    cout << "Drawing circle at (" << x << "," << y << ") with radius " << radius << endl;
+}
+
 class Point {
 private:
     int x, y;
@@ -16,22 +28,20 @@ public:
 class Shape
 {
 private:
-    int color;
+    int Color;
 public:
-    Shape() : color(0) {}
+    Shape() : Color(0) {}
 
-    Shape(int color)
-    {
-        this->color = color;
-    }
+    Shape(int color): Color(color) {}
     int getColor()
     {
-        return color;
+        return Color;
     }
     void setColor(int color)
     {
-        this->color = color;
+        this->Color = color;
     }
+    virtual void draw() = 0;
 };
 class Line : public Shape{
 private:
@@ -55,7 +65,6 @@ public:
     Rect() : Shape(),ul(), lr() {}
     Rect(int color,int x1, int y1, int x2, int y2) : Shape(color), ul(x1, y1), lr(x2, y2) {}
 
-
     void draw() {
         // Placeholder for drawing a rectangle
         rectangle(ul.getX(), ul.getY(), lr.getX(), lr.getY());
@@ -70,7 +79,6 @@ public:
     Circle() : Shape(), center(), radius(0) {}
     Circle(int color,int m, int n, int r) : Shape(color), center(m, n), radius(r) {}
 
-
     void draw() {
         // Placeholder for drawing a circle
         circle(center.getX(), center.getY(), radius);
@@ -79,68 +87,56 @@ public:
 
 class Picture {
 private:
-    int cNum, rNum, lNum;
-    Circle* pCircles;
-    Rect* pRects;
-    Line* pLines;
+    int numOfShapes;
+    Shape **shapes;
 
 public:
-    Picture() : cNum(0), rNum(0), lNum(0), pCircles(nullptr), pRects(nullptr), pLines(nullptr) {}
+    Picture() : numOfShapes(0), shapes(nullptr) {}
 
-    void setCircles(int cn, Circle* pC) {
-        cNum = cn;
-        pCircles = pC;
+
+
+
+
+    void setShapes(int numOfShapes, Shape** shapes) {
+        this->numOfShapes = numOfShapes;
+        this->shapes = new Shape*[numOfShapes];
+
+        for (int i = 0; i < numOfShapes; ++i) {
+            this->shapes[i] = shapes[i];
+        }
     }
-
-    void setRects(int rn, Rect* pR) {
-        rNum = rn;
-        pRects = pR;
+    ~Picture()
+    {
+        for (int i = 0; i < numOfShapes; ++i) {
+            delete shapes[i];
     }
-
-    void setLines(int ln, Line* pL) {
-        lNum = ln;
-        pLines = pL;
+        delete [] shapes;
     }
 
     void paint() {
-        for (int i = 0; i < cNum; i++) {
-            pCircles[i].draw();
-        }
-        for (int i = 0; i < rNum; i++) {
-            pRects[i].draw();
-        }
-        for (int i = 0; i < lNum; i++) {
-            pLines[i].draw();
+        for (int i = 0; i < numOfShapes; i++)
+        {
+            shapes[i]->draw();
         }
     }
 };
 
-// Example placeholder drawing functions
-void line(int x1, int y1, int x2, int y2) {
-    cout << "Drawing line from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")" << endl;
-}
 
-void rectangle(int x1, int y1, int x2, int y2) {
-    cout << "Drawing rectangle from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")" << endl;
-}
-
-void circle(int x, int y, int radius) {
-    cout << "Drawing circle at (" << x << "," << y << ") with radius " << radius << endl;
-}
 
 int main() {
-    // Graphic Mode
-    Picture myPic;
+    Picture picture;
+    Line l(1,1,2,3,4);
+    Circle c(1,1,2,5);
+    Rect r(1,5,5,2,2);
+    Shape* lShape = &l;
+    Shape* cShape = &c;
+    Shape* rShape = &r;
+    Shape* shapesArray[3] = {lShape, cShape, rShape};
+    picture.setShapes(3, shapesArray);
 
-    Circle cArr[3] = { Circle(50, 50, 50), Circle(200, 100, 100), Circle(420, 50, 30) };
-    Rect rArr[2] = { Rect(30, 40, 170, 100), Rect(420, 50, 500, 300) };
-    Line lArr[2] = { Line(420, 50, 300, 300), Line(40, 500, 500, 400) };
+    picture.paint();
 
-    myPic.setCircles(3, cArr);
-    myPic.setRects(2, rArr);
-    myPic.setLines(2, lArr);
-
-    myPic.paint();
+    return 0;
 
     return 0;
 }

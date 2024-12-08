@@ -1,4 +1,6 @@
 # depslib dependency file v1.0
-1733499439 source:d:\oop c++ programming\list class implementation\main.cpp
+1733585976 source:d:\oop c++ programming\list class implementation\main.cpp
 	<iostream>
+	<stdexcept>
+	<cstring>
 
