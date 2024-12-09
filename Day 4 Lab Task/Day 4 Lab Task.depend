@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1733691839 source:d:\oop c++ programming\day 4 lab task\main.cpp
+	<iostream>
+	<graphics.h>
+	<conio.h>
+	<winbgim.h>
+	<windows.h>
+
