@@ -21,6 +21,21 @@ public:
         this->characters[j] = '\0';
     }
 
+    String(const String &s)
+    {
+        this->size = s.size;
+        //this->inputSize = l.inputSize;
+        this->characters = new char[size]();
+        for (int i = 0; i < size; i++)
+        {
+            this->characters[i]=s.characters[i];
+            cout << "Added element: " << characters[i] << endl;
+        }
+        this->characters[size] = '\0';
+        cout << "Copy constructor called!\n";
+
+    }
+
     String& operator+=( String &s)
     {
         int newSize = this->strlen() + s.strlen() + 1;
@@ -214,6 +229,9 @@ int main()
     cout << s1[3] << endl;
     cout << s1[13] << endl;
     String s5 = s1.esraa_substr(1,5);
+    //String s5(3, "uno");
     s5.display();
+    String s6(s5);
+    s6.display();
     return 0;
 }

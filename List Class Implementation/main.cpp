@@ -21,6 +21,24 @@ private:
 
 public:
 
+    List(const List &l)
+    {
+        this->Size = l.Size;
+        this->inputSize = l.inputSize;
+        //cout << "size: " << Size << " and input size: " << inputSize << endl;
+        this->elements = new char[Size]();
+        for (int i = 0; i < inputSize; i++)
+        {
+            this->elements[i]=l.elements[i];
+            //cout << "Added element: " << elements[i] << endl;
+        }
+        this->elements[inputSize] = '\0';
+        //cout << "Copy constructor called!\n";
+
+    }
+
+
+
     List(int Size = 10, char *elements = "")
         {
             inputSize = 0;
@@ -56,39 +74,72 @@ public:
     int getSize() const {
         return Size;
     }
+    List& operator=( List &l)
+    {
+        if (this == &l) return *this;
+
+        delete[] this->elements;
+        this->Size = l.Size;
+        this->inputSize = l.inputSize;
+        //cout << "new size:" << Size << endl;
+        this->elements = new char[Size]();
+        //cout << "input size: " << l.inputSize << endl;
+        for (int i = 0; i < l.inputSize; i++) {
+            this->elements[i] = l.elements[i];
+            //cout << "Added element: " << elements[i] << endl;
+        }
+        return *this;
+    }
 
     void pushBack(char element) {
-       /* cout << "num of elements before increment: " << inputSize << endl;
-        cout << "List size: " << Size << endl;
-        inputSize++;
-        cout << "num of elements after increment: " << inputSize << endl;
-        char* newElements = new char[Size]();
+        //cout << "num of elements before increment: " << inputSize << endl;
+        //cout << "List size: " << Size << endl;
+        //cout << "num of elements after increment: " << inputSize << endl;
         if (inputSize >= Size) {
-
-            Size += 10;
-
-
-            for (int i = 0; i < inputSize - 1; i++) {
+            Size *= 2;
+            char* newElements = new char[Size]();
+            for (int i = 0; i < inputSize; i++) {
                 newElements[i] = elements[i];
-                cout << "Added element is: " << newElements[i] << endl;
+                //cout << "Added element is: " << elements[i] << endl;
+                //cout << "Added element is: " << newElements[i] << endl;
+                //cout << "List size: " << Size << endl;
             }
-            newElements[inputSize-1] = element;
+            newElements[inputSize++] = element;
             delete[] elements;
             elements = newElements;
-            Size = newSize;
+            //Size = newSize;
         }
         else
         {
-
+            elements[inputSize++] = element;
         }
         elements[inputSize] = '\0';
-    }/./*/
-    /*
-    issues:
+    }
+        void popBack() {
+            //cout << "input size before pop: " << inputSize << endl;
+            elements[inputSize-1] = '\0';
+            inputSize--;
+            //cout << "New input size after pop: " << inputSize << endl;
 
-    1==> newsize assigned gowa l if condition
-    2==> l array of newelements mt3araf bardo gowa scope l if condition bas
-    */
+    }
+    char operator[](int index)
+    {
+        try {
+            if (index > this->Size)
+            {
+                return -1;
+                throw out_of_range("Out of bounds!");
+            }
+
+        }
+        catch (const exception& e)
+        {
+            cout << e.what();;
+        }
+
+        return this->elements[index];
+    }
+
 
     char& getStart() {
         if (inputSize == 0) {
@@ -111,12 +162,26 @@ int main() {
     l1.display();
     cout << l1.getStart() << endl;
     cout << l1.getEnding() << endl;
-
-
-    List l2(3, "uno");
-    l2.pushBack('Q');
+    List l2(15, "Lululemon");
     l2.display();
-    cout << l2.getSize() << endl;
+    l2.pushBack('a');
+    l2.display();
+    l2.pushBack('a');
+    l2.pushBack('a');
+    l2.pushBack('a');
+    l2.pushBack('a');
+    l2.pushBack('a');
+    l2.pushBack('a');
+    l2.display();
+    l2.popBack();
+    l2.display();
+    cout << l2[7] << endl;
+    l1 = l2;
+    l1.display();
+    List l3(13,"Farida");
+    List l4(l3);
+    l4.display();
+
 
     return 0;
 }
