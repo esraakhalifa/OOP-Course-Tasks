@@ -21,7 +21,7 @@ private:
 
 public:
 
-    List(const List &l)
+    List( List &l)
     {
         this->Size = l.Size;
         this->inputSize = l.inputSize;

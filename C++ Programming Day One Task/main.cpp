@@ -237,13 +237,14 @@ int main()
     cout <<  (myComp1 >= myComp2) << endl;
     cout <<  (myComp1 <= myComp2) << endl;
     cout <<  (myComp1 == myComp2) << endl;*/
-    myComp1++;
-    myComp1.print();
-    ++myComp1;
-    myComp2.print();
-    resultComp = complex(1,2) * complex(1,2);
+    //myComp1++;
+    //myComp1.print();
+    //++myComp1;
+    //myComp2.print();
+    //resultComp = complex(1,2) * complex(1,2);
+    resultComp = myComp1 * myComp2;
     resultComp.print();
-    resultComp = complex(1,2) / complex(1,2);
+    /*resultComp = complex(1,2) / complex(1,2);
     resultComp.print();
     resultComp = complex(1,2);
     resultComp.print();
@@ -257,5 +258,6 @@ int main()
     //resultComp.subtract(myComp2);
     //resultComp.print();
     //resultComp.print();
+    */
     return 0;
 }

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <graphics.h>
 #include <conio.h>
-#include <winbgim.h>
-#include <windows.h>
+//#include <winbgim.h>
+//#include <windows.h>
 using namespace std;
 
 void line(int x1, int y1, int x2, int y2) {
@@ -51,11 +51,12 @@ private:
     Point start;
     Point end;
 public:
-    Line() : Shape(), start(), end() {}
+    Line() : Shape(0), start(), end() {}
     Line(int x1, int y1, int x2, int y2) : Shape(), start(x1, y1), end(x2, y2) {}
 
     void draw() {
         // Placeholder for drawing a line
+        setcolor(this->get_color());
         line(start.getX(), start.getY(), end.getX(), end.getY());
     }
 };
@@ -65,11 +66,12 @@ private:
     Point ul; // Upper-left point
     Point lr; // Lower-right point
 public:
-    Rect() : Shape(),ul(), lr() {}
+    Rect() : Shape(0),ul(), lr() {}
     Rect(int x1, int y1, int x2, int y2) : Shape(), ul(x1, y1), lr(x2, y2) {}
 
     void draw() {
         // Placeholder for drawing a rectangle
+        setcolor(this->get_color());
         rectangle(ul.getX(), ul.getY(), lr.getX(), lr.getY());
     }
 };
@@ -79,11 +81,12 @@ private:
     Point center;
     int radius;
 public:
-    Circle() : Shape(), center(), radius(0) {}
+    Circle() : Shape(0), center(), radius(0) {}
     Circle(int m, int n, int r) : Shape(), center(m, n), radius(r) {}
 
     void draw() {
         // Placeholder for drawing a circle
+        setcolor(this->get_color());
         circle(center.getX(), center.getY(), radius);
     }
 };

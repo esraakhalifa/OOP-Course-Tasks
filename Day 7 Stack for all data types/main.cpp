@@ -2,40 +2,38 @@
 
 using namespace std;
 
-
+template <typename T>
 class Stack{
 
 private:
     int size;
     int top;
-    int * items;
+    T * items;
     static int count;
 public:
-    Stack(int size= 0)
+    Stack(int size)
     {
         this->size = size;
         top = -1;
-        items = new int [size];
+        items = new T [size];
         count++;
         cout << "Constructor called!\n";
         cout << count << endl;
     }
-    Stack(const Stack &S)
+    Stack(Stack &S)
     {
         this->size = S.size;
         this->top = S.top;
-        this->items = new int[size];
+        this->items = new T[size];
         for (int i = 0; i < top + 1; i++)
         {
             this->items[i]=S.items[i];
         }
         cout << "Copy constructor called!\n";
-        count++;
-        cout << count << endl;
 
     }
 
-    int push(int data)
+    int push(T data)
     {
         if(top == size - 1)
         {
@@ -46,14 +44,14 @@ public:
         items[top] = data;
         return 1;
     }
-    int pop()
+    T pop()
     {
         if (top == -1)
         {
 
             throw runtime_error("Stack is already empty.");
         }
-        int data = items[top];
+        T data = items[top];
         top--;
         cout << "Successful pop.\n";
         return data;
@@ -74,14 +72,13 @@ public:
         delete [] items;
         count--;
         cout << "Destructor Call !\n";
-        cout << count << endl;
     }
-    Stack operator=( Stack &S)
+    Stack& operator=(Stack &S)
     {
         delete[] items;
         size = S.size;
         top = S.top;
-        items = new int[size];
+        items = new T[size];
         for (int i = 0; i < top + 1; i++)
         {
             items[i]=S.items[i];
@@ -92,37 +89,29 @@ public:
 
 };
 
+template <typename T>
+int Stack<T>::count = 0;
 
-int Stack::count = 0;
-
-
-void viewContentByVal(Stack S)
+template <typename T>
+void viewContentByVal(Stack<T> S)
 {
+    //Stack S1(S);
     S.display();
     cout << "I'm the viewContentByVal function!\n";
 }
-
-void viewContentByRef(Stack &S)
+template <typename T>
+void viewContentByRef(Stack<T> &S)
 {
     S.display();
     cout << "I'm the viewContentByRef function!\n";
-}
-Stack& TOO()
-{
-    Stack S;
-    return S;
-
 }
 
 
 int main()
 {
 
-    Stack s(10);
-    Stack s1;
-    s1 = TOO();
-    s = s1;
-    /*s.push(15);
+    Stack <int>s(10);
+    s.push(15);
     s.push(20);
     s.push(35);
     s.push(25);
@@ -132,7 +121,7 @@ int main()
     s.push(25);
     s.push(25);
     s.push(25);
-    Stack s1(5);
+    Stack <int> s1(5);
     s1.push(1);
     s1.push(2);
     s1.push(3);
@@ -150,8 +139,8 @@ int main()
     {
         cout << e.what() << endl;
     }
-    s.display();*/
-
-
+    s.display();
+    Stack <float> sF(5.0);
+    Stack <double> sD(5.0);
 
 }

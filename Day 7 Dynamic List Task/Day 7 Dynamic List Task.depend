@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1733750078 source:d:\oop c++ programming\day 7 dynamic list task\main.cpp
+	<iostream>
+	<vector>
+	<memory>
+
