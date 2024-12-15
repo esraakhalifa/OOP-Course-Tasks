@@ -1,23 +1,33 @@
 #include <iostream>
 #include <graphics.h>
-#include <conio.h>
-//#include <winbgim.h>
-//#include <windows.h>
 using namespace std;
 
-void line(int x1, int y1, int x2, int y2) {
-    cout << "Drawing line from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")" << endl;
-}
+class Shape
+{
+    private:
+        int color;
+    protected:
+    public:
+        Shape(int color)
+        {
+            this-> color=color;
+        }
+        void set_color(int color)
+        {
+            this-> color=color;
+        }
+        int get_color()
+        {
+            return this-> color;
+        }
+        virtual void draw()=0;
+        ~Shape()
+        {
 
-void rectangle(int x1, int y1, int x2, int y2) {
-    cout << "Drawing rectangle from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")" << endl;
-}
-
-void circle(int x, int y, int radius) {
-    cout << "Drawing circle at (" << x << "," << y << ") with radius " << radius << endl;
-}
-
-class Point {
+        }
+};
+class Point
+{
 private:
     int x, y;
 public:
@@ -28,116 +38,93 @@ public:
     int getY() { return y; }
 };
 
-class Shape
+class Line :public Shape
 {
-private:
-    int Color;
-public:
-    Shape() : Color(CYAN) {}
-
-    Shape(int color): Color(color) {}
-    int getColor()
-    {
-        return Color;
-    }
-    void setColor(int color)
-    {
-        this->Color = color;
-    }
-    virtual void draw() = 0;
-};
-class Line : public Shape{
 private:
     Point start;
     Point end;
 public:
-    Line() : Shape(0), start(), end() {}
-    Line(int x1, int y1, int x2, int y2) : Shape(), start(x1, y1), end(x2, y2) {}
-
+    Line() :Shape(0), start(), end() {}
+    Line(int x1, int y1, int x2, int y2,int color) :Shape(color), start(x1, y1), end(x2, y2) {}
     void draw() {
-        // Placeholder for drawing a line
+
         setcolor(this->get_color());
         line(start.getX(), start.getY(), end.getX(), end.getY());
     }
 };
 
-class Rect : public Shape{
+class Rect :public Shape
+{
 private:
-    Point ul; // Upper-left point
-    Point lr; // Lower-right point
+    Point ul;
+    Point lr;
 public:
     Rect() : Shape(0),ul(), lr() {}
-    Rect(int x1, int y1, int x2, int y2) : Shape(), ul(x1, y1), lr(x2, y2) {}
-
+    Rect(int x1, int y1, int x2, int y2,int color) :Shape(color), ul(x1, y1), lr(x2, y2) {}
     void draw() {
-        // Placeholder for drawing a rectangle
         setcolor(this->get_color());
         rectangle(ul.getX(), ul.getY(), lr.getX(), lr.getY());
     }
 };
-
-class Circle : public Shape{
+class Circle :public Shape
+{
 private:
     Point center;
     int radius;
 public:
-    Circle() : Shape(0), center(), radius(0) {}
-    Circle(int m, int n, int r) : Shape(), center(m, n), radius(r) {}
-
+    Circle() :Shape(0), center(), radius(0) {}
+    Circle(int m, int n, int r,int color) :Shape(color), center(m, n), radius(r) {}
     void draw() {
-        // Placeholder for drawing a circle
         setcolor(this->get_color());
         circle(center.getX(), center.getY(), radius);
     }
 };
 
-class Picture {
+class Picture
+{
 private:
-    int numOfShapes;
-    Shape **shapes;
-
+    int size;
+    Shape **items;
+    int counter;
 public:
-    Picture() : numOfShapes(0), shapes(nullptr) {}
-
-
-
-
-
-    void setShapes(int numOfShapes, Shape** shapes) {
-        this->numOfShapes = numOfShapes;
-        this->shapes = new Shape*[numOfShapes];
-
-        for (int i = 0; i < numOfShapes; ++i) {
-            this->shapes[i] = shapes[i];
-        }
+    Picture(int size)
+    {
+        this->size=size;
+        items=new Shape*[size];
+        counter=-1;
     }
-
-    void paint() {
-        for (int i = 0; i < numOfShapes; i++)
+     void addShape(Shape *shape)
+     {
+         if(counter==size-1){
+            return;
+         }
+         counter++;
+         items[counter]=shape;
+    }
+    void paint()
+    {
+        for (int i=0;i<=counter;i++)
         {
-            shapes[i]->draw();
+            items[i]->draw();
         }
     }
 };
-
-
-
-int main() {
+int main()
+{
     int gd = DETECT, gm;
     initgraph(&gd, &gm, "");
-    Picture picture;
-    Line l(100, 300, 500, 300);
-    Circle c(400, 150, 50);
-    Rect r(100, 100, 300, 200);
-    Shape* lShape = &l;
-    Shape* cShape = &c;
-    Shape* rShape = &r;
-    Shape* shapesArray[3] = {lShape, cShape, rShape};
-    picture.setShapes(3, shapesArray);
+    Picture myPic(10);
 
-    picture.paint();
+    myPic.addShape(new Circle(50, 50, 50,1));
+    myPic.addShape(new Circle(200, 100, 100,2));
+    myPic.addShape(new Circle(420, 50, 30,3));
+    myPic.addShape(new Rect(30, 40, 170, 100,4));
+    myPic.addShape(new Rect(420, 50, 500, 300,5));
+    myPic.addShape(new Line(420, 50, 300, 300,6));
+    myPic.addShape(new Line(40, 500, 500, 400,7));
+
+
+    myPic.paint();
     getch();
-
     return 0;
-
 }
